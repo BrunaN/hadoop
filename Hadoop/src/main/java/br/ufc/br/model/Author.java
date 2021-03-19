@@ -1,4 +1,4 @@
-package model;
+package br.ufc.br.model;
 
 public class Author {
 	private Integer reviews;

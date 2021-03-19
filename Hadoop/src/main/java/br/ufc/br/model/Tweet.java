@@ -1,4 +1,4 @@
-package model;
+package br.ufc.br.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,7 +8,7 @@ import com.sun.istack.NotNull;
 public class Tweet {
 	private String text;
 	
-	private Author author;
+//	private Author author;
 	
 	public Tweet(Object value) {
 	}
@@ -18,7 +18,7 @@ public class Tweet {
 		return text;
 	}
 	
-	public Author getAuthor() {
-		return author;
-	}
+//	public Author getAuthor() {
+//		return author;
+//	}
 }

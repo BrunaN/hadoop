@@ -1,3 +1,4 @@
+package br.ufc.br;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -8,14 +9,15 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.Reducer.Context;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import com.google.gson.Gson;
-import model.Tweet;
 
-public class Itemb {
+import br.ufc.br.model.Tweet;
+
+public class WordCount {
+
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
 
 		private final static IntWritable one = new IntWritable(1);
@@ -27,34 +29,14 @@ public class Itemb {
 			Tweet t = gson.fromJson(value.toString(), Tweet.class);
 
 			String text = t.getText();
-			IntWritable reviews = new IntWritable(t.getAuthor().getReviews());
-
-//			while (itr.hasMoreTokens()) {
-//				String test = itr.nextToken() + " " + itr.nextElement();
-//				System.out.println("TEST: "+ test);
-//			}
-
-			System.out.println("text: " + text);
-			System.out.println("autor: " + reviews);
-
 			if (text != null) {
 				StringTokenizer itr = new StringTokenizer(text);
-
-				String previous = itr.nextToken();
-				while (itr.hasMoreElements()) {
-					String current = itr.nextToken();
-					String correctValue = previous + " " + current;
-
-					word.set(correctValue);
-					context.write(word, one);
-					previous = current;
-				}
-//				StringTokenizer itr = new StringTokenizer(text);
-//												
-//				while (itr.hasMoreTokens()) {
+				System.out.println(itr.nextToken());
+				while (itr.hasMoreTokens()) {
 //        		System.out.println(itr.nextToken());
-
-//				}
+					word.set(itr.nextToken());
+					context.write(word, one);
+				}
 			}
 		}
 	}
