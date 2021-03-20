@@ -1,12 +1,12 @@
 package br.ufc.br.model;
 
 public class Author {
-	private Integer reviews;
+	private String reviews;
 
 	public Author(Object value) {
 	}
 	
-	public Integer getReviews() {
+	public String getReviews() {
 		return reviews;
 	}
 }

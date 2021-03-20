@@ -1,24 +1,38 @@
 package br.ufc.br.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.sun.istack.NotNull;
-
 public class Tweet {
+	private Id _id;
+	private String createdAt;
 	private String text;
+	private Author author;
 	
-//	private Author author;
-	
+	public class Id {
+		private String $oid;
+
+		public Id(Object value) {
+		}
+		
+		public String getId() {
+			return $oid;
+		}
+	}
+		
 	public Tweet(Object value) {
 	}
 
-	@NotNull
+	public String getCreatedAt() {
+		return createdAt;
+	}
+	
 	public String getText() {
 		return text;
 	}
 	
-//	public Author getAuthor() {
-//		return author;
-//	}
+	public Author getAuthor() {
+		return author;
+	}
+	
+	public String getId() {
+		return _id.getId();
+	}
 }
