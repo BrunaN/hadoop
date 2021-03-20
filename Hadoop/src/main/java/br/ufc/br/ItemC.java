@@ -1,4 +1,5 @@
 package br.ufc.br;
+
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
@@ -24,18 +25,20 @@ public class ItemC {
 			Gson gson = new Gson();
 			Tweet t = gson.fromJson(value.toString(), Tweet.class);
 
-			String reviews = t.getAuthor().getReviews().replace(",", "");
+			String reviews = t.getAuthor().getReviews().replace(",", ".");
 			String id = t.getId();
 			
-			if(!reviews.isEmpty())
-				context.write(new Text(id), new IntWritable(Integer.parseInt(reviews)));
+			if(!reviews.isEmpty()) {
+				Double numParsed = Double.parseDouble(reviews);
+				Integer reviewsNumber = (int) Math.round(numParsed);
+				context.write(new Text(id), new IntWritable(reviewsNumber));
+			}
 						
 		}
 	}
 
-	public static class ReviewsReducer extends Reducer<Text, IntWritable, Text, IntWritable> {		
-		public void reduce(Text key, IntWritable values, Context context)
-				throws IOException, InterruptedException {
+	public static class ReviewsReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+		public void reduce(Text key, IntWritable values, Context context) throws IOException, InterruptedException {
 			context.write(key, values);
 		}
 	}

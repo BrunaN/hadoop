@@ -25,25 +25,29 @@ public class ItemD {
 			Gson gson = new Gson();
 			Tweet t = gson.fromJson(value.toString(), Tweet.class);
 
-			String reviews = t.getAuthor().getReviews().replace(",", "");
+			String reviews = t.getAuthor().getReviews().replace(",", ".");
 			String createdAt = (t.getCreatedAt());
-
-			if (!reviews.isEmpty() && createdAt!=null)
-				context.write(new Text(createdAt), new IntWritable(Integer.parseInt(reviews)));
+			
+			if (!reviews.isEmpty() && createdAt!=null) {
+				Double numParsed = Double.parseDouble(reviews);
+				Integer reviewsNumber = (int) Math.round(numParsed);
+				context.write(new Text(createdAt), new IntWritable(reviewsNumber));
+			}
 		}
 	}
 
 	public static class CreatedAtByReviewsReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 		private IntWritable result = new IntWritable();
 
-		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+		public void reduce(Text key, Iterable<IntWritable> values, Context context)
+				throws IOException, InterruptedException {
 
 			int sum = 0;
 			for (IntWritable val : values) {
 				sum += val.get();
 			}
 			result.set(sum);
-			
+
 			context.write(key, result);
 		}
 	}
