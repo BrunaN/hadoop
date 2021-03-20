@@ -44,7 +44,7 @@ public class Comparator {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "item c");
+		Job job = Job.getInstance(conf, "comparador");
 		job.setJarByClass(ItemA.class);
 		job.setMapperClass(ReviewsMapper.class);
 		job.setOutputKeyClass(IntWritable.class);
