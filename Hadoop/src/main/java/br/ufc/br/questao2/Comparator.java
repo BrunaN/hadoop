@@ -1,4 +1,4 @@
-package br.ufc.br;
+package br.ufc.br.questao2;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package br.ufc.br;
+package br.ufc.br.questao2;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -14,10 +14,10 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import com.google.gson.Gson;
 
-import br.ufc.br.model.Tweet;
+import br.ufc.br.questao2.model.Tweet;
 
-public class ItemA {
-
+public class ItemB {
+	
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
 
 		private final static IntWritable one = new IntWritable(1);
@@ -31,9 +31,14 @@ public class ItemA {
 			String text = t.getText();
 			if (text != null) {
 				StringTokenizer itr = new StringTokenizer(text);
-				while (itr.hasMoreTokens()) {
-					word.set(itr.nextToken().replaceAll("[^a-zA-Z0-9]", ""));
+				String previous = itr.nextToken().replaceAll("[^a-zA-Z0-9]", "");
+				while (itr.hasMoreElements()) {
+					String current = itr.nextToken().replaceAll("[^a-zA-Z0-9]", "");
+					System.out.println(current);
+					String correctValue = previous + " " + current;
+					word.set(correctValue);
 					context.write(word, one);
+					previous = current;
 				}
 			}
 		}
@@ -55,7 +60,7 @@ public class ItemA {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "item a");
+		Job job = Job.getInstance(conf, "item b");
 		job.setJarByClass(ItemA.class);
 		job.setMapperClass(TokenizerMapper.class);
 		job.setCombinerClass(IntSumReducer.class);

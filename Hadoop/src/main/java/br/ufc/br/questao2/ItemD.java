@@ -1,4 +1,4 @@
-package br.ufc.br;
+package br.ufc.br.questao2;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import com.google.gson.Gson;
 
-import br.ufc.br.model.Tweet;
+import br.ufc.br.questao2.model.Tweet;
 
 public class ItemD {
 

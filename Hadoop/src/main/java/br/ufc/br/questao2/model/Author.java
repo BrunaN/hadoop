@@ -1,4 +1,4 @@
-package br.ufc.br.model;
+package br.ufc.br.questao2.model;
 
 public class Author {
 	private String reviews;

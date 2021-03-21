@@ -18,11 +18,11 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class LetraA {
+public class ItemATarde {
 
 	public static Reader getReader(String relativePath) throws UnsupportedEncodingException {
 
-		return new InputStreamReader(LetraA.class.getResourceAsStream(relativePath), "UTF-8");
+		return new InputStreamReader(ItemATarde.class.getResourceAsStream(relativePath), "UTF-8");
 
 	}
 
@@ -42,7 +42,7 @@ public class LetraA {
 				StringTokenizer itr = new StringTokenizer(text);
 				while (itr.hasMoreTokens()) {
 					String next = itr.nextToken();
-					if (hour > 6 && hour < 12)
+					if (hour >= 12 && hour < 18)
 						if (next.startsWith("#")) {
 							word.set(next);
 							context.write(word, one);
@@ -51,7 +51,6 @@ public class LetraA {
 			}
 		}
 	}
-
 
 	public static class IntSumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 		private IntWritable result = new IntWritable();
@@ -70,16 +69,14 @@ public class LetraA {
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "questao 2");
-		job.setJarByClass(LetraA.class);
+		job.setJarByClass(ItemATarde.class);
 		job.setMapperClass(TokenizerMapper.class);
 		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
-		FileInputFormat.addInputPath(job,
-				new Path("/home/igor/projetos/pessoal/hadoop/Hadoop/src/resources/databases/q1"));
-		FileOutputFormat.setOutputPath(job,
-				new Path("/home/igor/projetos/pessoal/hadoop/Hadoop/src/resources/databases/output/q1/letra_a/manha"));
+		FileInputFormat.addInputPath(job, new Path("/home/igor/projetos/pessoal/databases/q1"));
+		FileOutputFormat.setOutputPath(job, new Path("/home/igor/projetos/pessoal/databases/output/q1/letra_a/tarde"));
 		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }
