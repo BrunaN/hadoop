@@ -45,7 +45,7 @@ public class Ordenador {
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "comparador");
-		job.setJarByClass(ItemManha.class);
+		job.setJarByClass(ItemAManha.class);
 		job.setMapperClass(ReviewsMapper.class);
 		job.setOutputKeyClass(IntWritable.class);
 		job.setOutputValueClass(Text.class);

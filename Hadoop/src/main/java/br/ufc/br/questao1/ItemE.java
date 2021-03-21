@@ -18,12 +18,10 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class ItemManha {
+public class ItemE {
 
 	public static Reader getReader(String relativePath) throws UnsupportedEncodingException {
-
-		return new InputStreamReader(ItemManha.class.getResourceAsStream(relativePath), "UTF-8");
-
+		return new InputStreamReader(ItemE.class.getResourceAsStream(relativePath), "UTF-8");
 	}
 
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
@@ -36,17 +34,14 @@ public class ItemManha {
 			List<String> tokens = Arrays.asList(line.split("\t"));
 
 			String text = tokens.get(1);
-			int hour = Integer.parseInt(tokens.get(7).split(" ")[3].split(":")[0]);
 
 			if (text != null && text != "") {
 				StringTokenizer itr = new StringTokenizer(text);
 				while (itr.hasMoreTokens()) {
-					String next = itr.nextToken();
-					if (hour >= 6 && hour < 12)
-						if (next.startsWith("#")) {
-							word.set(next);
-							context.write(word, one);
-						}
+					if(itr.nextToken().equals("Aécio")) {
+						word.set(text);
+						context.write(word, one);
+					}
 				}
 			}
 		}
@@ -69,14 +64,14 @@ public class ItemManha {
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "questao 2");
-		job.setJarByClass(ItemManha.class);
+		job.setJarByClass(ItemAManha.class);
 		job.setMapperClass(TokenizerMapper.class);
 		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
-		FileInputFormat.addInputPath(job, new Path("/home/igor/projetos/pessoal/databases/q1"));
-		FileOutputFormat.setOutputPath(job, new Path("/home/igor/projetos/pessoal/databases/output/q1/letra_a/manha"));
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }

@@ -6,7 +6,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
-//import java.util.StringTokenizer;
+import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -15,29 +15,35 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-//import org.apache.hadoop.mapreduce.Reducer.Context;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class ItemC {
+public class ItemD {
+
 	public static Reader getReader(String relativePath) throws UnsupportedEncodingException {
-
-		return new InputStreamReader(ItemATarde.class.getResourceAsStream(relativePath), "UTF-8");
-
+		return new InputStreamReader(ItemD.class.getResourceAsStream(relativePath), "UTF-8");
 	}
 
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
-//		private final static IntWritable one = new IntWritable(1);
+		private final static IntWritable one = new IntWritable(1);
+		private Text word = new Text();
 
 		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 
 			String line = value.toString();
 			List<String> tokens = Arrays.asList(line.split("\t"));
 
-			String day = tokens.get(7).split(" ")[2];
-			String hour = tokens.get(7).split(" ")[3].split(":")[0];
-			
-			context.write(new Text(day + "/" + hour), new IntWritable(1));
+			String text = tokens.get(1);
+
+			if (text != null && text != "") {
+				StringTokenizer itr = new StringTokenizer(text);
+				while (itr.hasMoreTokens()) {
+					if(itr.nextToken().equals("Dilma")) {
+						word.set(text);
+						context.write(word, one);
+					}
+				}
+			}
 		}
 	}
 
@@ -46,13 +52,11 @@ public class ItemC {
 
 		public void reduce(Text key, Iterable<IntWritable> values, Context context)
 				throws IOException, InterruptedException {
-
 			int sum = 0;
 			for (IntWritable val : values) {
 				sum += val.get();
 			}
 			result.set(sum);
-
 			context.write(key, result);
 		}
 	}
@@ -60,14 +64,14 @@ public class ItemC {
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "questao 2");
-		job.setJarByClass(ItemC.class);
+		job.setJarByClass(ItemAManha.class);
 		job.setMapperClass(TokenizerMapper.class);
 		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
-		FileInputFormat.addInputPath(job, new Path("/home/igor/projetos/pessoal/databases/q1"));
-		FileOutputFormat.setOutputPath(job,new Path("/home/igor/projetos/pessoal/databases/output/q1/letra_c/"));
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }
