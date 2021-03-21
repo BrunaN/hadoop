@@ -34,7 +34,6 @@ public class ItemB {
 				String previous = itr.nextToken().replaceAll("[^a-zA-Z0-9]", "");
 				while (itr.hasMoreElements()) {
 					String current = itr.nextToken().replaceAll("[^a-zA-Z0-9]", "");
-					System.out.println(current);
 					String correctValue = previous + " " + current;
 					word.set(correctValue);
 					context.write(word, one);
