@@ -21,3 +21,12 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+Hadoop/.attach_pid*
+Hadoop/target/
+Hadoop/.attach_pid12994
+Hadoop/.attach_pid15484
+Hadoop/.attach_pid18415
+Hadoop/.classpath
+Hadoop/.settings/
+Hadoop/bin/.metadata/
+Hadoop/.classpath
