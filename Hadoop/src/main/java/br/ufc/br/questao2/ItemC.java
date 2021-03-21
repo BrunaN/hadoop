@@ -51,8 +51,8 @@ public class ItemC {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "item c");
-		job.setJarByClass(ItemA.class);
+		Job job = Job.getInstance(conf, "questao 2 - item c");
+		job.setJarByClass(ItemC.class);
 		job.setMapperClass(ReviewsMapper.class);
 		job.setOutputKeyClass(IntWritable.class);
 		job.setOutputValueClass(Text.class);

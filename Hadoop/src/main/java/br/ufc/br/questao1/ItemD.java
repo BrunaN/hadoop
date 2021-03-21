@@ -24,7 +24,7 @@ public class ItemD {
 		return new InputStreamReader(ItemD.class.getResourceAsStream(relativePath), "UTF-8");
 	}
 
-	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
+	public static class Map extends Mapper<Object, Text, Text, IntWritable> {
 		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
 
@@ -63,9 +63,9 @@ public class ItemD {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "questao 2");
-		job.setJarByClass(ItemAManha.class);
-		job.setMapperClass(TokenizerMapper.class);
+		Job job = Job.getInstance(conf, "questao 1 - item d");
+		job.setJarByClass(ItemD.class);
+		job.setMapperClass(Map.class);
 		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);

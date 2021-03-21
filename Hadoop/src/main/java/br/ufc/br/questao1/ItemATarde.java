@@ -26,7 +26,7 @@ public class ItemATarde {
 
 	}
 
-	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
+	public static class Map extends Mapper<Object, Text, Text, IntWritable> {
 		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
 
@@ -44,7 +44,7 @@ public class ItemATarde {
 					String next = itr.nextToken();
 					if (hour >= 12 && hour < 18)
 						if (next.startsWith("#")) {
-							word.set(next);
+							word.set(next.replaceAll("[^a-zA-Z0-9]", ""));
 							context.write(word, one);
 						}
 				}
@@ -68,9 +68,9 @@ public class ItemATarde {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "questao 2");
+		Job job = Job.getInstance(conf, "questao 1 - item a tarde");
 		job.setJarByClass(ItemATarde.class);
-		job.setMapperClass(TokenizerMapper.class);
+		job.setMapperClass(Map.class);
 		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);

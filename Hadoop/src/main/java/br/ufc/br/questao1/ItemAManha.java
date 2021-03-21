@@ -26,7 +26,7 @@ public class ItemAManha {
 
 	}
 
-	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
+	public static class Map extends Mapper<Object, Text, Text, IntWritable> {
 		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
 
@@ -68,9 +68,9 @@ public class ItemAManha {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "questao 2");
+		Job job = Job.getInstance(conf, "questao 1 - item a manha");
 		job.setJarByClass(ItemAManha.class);
-		job.setMapperClass(TokenizerMapper.class);
+		job.setMapperClass(Map.class);
 		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);

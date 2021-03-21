@@ -54,8 +54,8 @@ public class ItemD {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "item d");
-		job.setJarByClass(ItemA.class);
+		Job job = Job.getInstance(conf, "questao 2 - item d");
+		job.setJarByClass(ItemD.class);
 		job.setMapperClass(CreatedAtByReviewsMapper.class);
 		job.setCombinerClass(CreatedAtByReviewsReducer.class);
 		job.setReducerClass(CreatedAtByReviewsReducer.class);

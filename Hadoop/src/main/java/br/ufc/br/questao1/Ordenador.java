@@ -44,14 +44,14 @@ public class Ordenador {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "comparador");
-		job.setJarByClass(ItemAManha.class);
+		Job job = Job.getInstance(conf, "ordenador");
+		job.setJarByClass(Ordenador.class);
 		job.setMapperClass(ReviewsMapper.class);
 		job.setOutputKeyClass(IntWritable.class);
 		job.setOutputValueClass(Text.class);
 		job.setSortComparatorClass(DescendingIntWritableComparable.DecreasingComparator.class);
-		FileInputFormat.addInputPath(job, new Path("/home/igor/projetos/pessoal/databases/output/q1/letra_b/sexto_dia"));
-		FileOutputFormat.setOutputPath(job, new Path("/home/igor/projetos/pessoal/databases/output/q1/letra_b/final/sexto_dia"));
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }

@@ -25,7 +25,7 @@ public class ItemB {
 
 	}
 
-	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
+	public static class Map extends Mapper<Object, Text, Text, IntWritable> {
 		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
 
@@ -66,15 +66,15 @@ public class ItemB {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "questao 2");
+		Job job = Job.getInstance(conf, "questao 1 - item b");
 		job.setJarByClass(ItemB.class);
-		job.setMapperClass(TokenizerMapper.class);
+		job.setMapperClass(Map.class);
 		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
-		FileInputFormat.addInputPath(job, new Path("/home/igor/projetos/pessoal/databases/q1"));
-		FileOutputFormat.setOutputPath(job, new Path("/home/igor/projetos/pessoal/databases/output/q1/letra_b/sexto_dia"));
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }

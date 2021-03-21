@@ -26,7 +26,7 @@ public class ItemC {
 
 	}
 
-	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
+	public static class Map extends Mapper<Object, Text, Text, IntWritable> {
 //		private final static IntWritable one = new IntWritable(1);
 
 		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
@@ -59,9 +59,9 @@ public class ItemC {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "questao 2");
+		Job job = Job.getInstance(conf, "questao 1 - item c");
 		job.setJarByClass(ItemC.class);
-		job.setMapperClass(TokenizerMapper.class);
+		job.setMapperClass(Map.class);
 		job.setCombinerClass(IntSumReducer.class);
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);

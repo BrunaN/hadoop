@@ -55,7 +55,7 @@ public class ItemA {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "item a");
+		Job job = Job.getInstance(conf, "questao 2 - item a");
 		job.setJarByClass(ItemA.class);
 		job.setMapperClass(TokenizerMapper.class);
 		job.setCombinerClass(IntSumReducer.class);
