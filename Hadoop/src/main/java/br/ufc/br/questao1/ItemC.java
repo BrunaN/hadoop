@@ -66,8 +66,8 @@ public class ItemC {
 		job.setReducerClass(IntSumReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
-		FileInputFormat.addInputPath(job, new Path("/home/igor/projetos/pessoal/databases/q1"));
-		FileOutputFormat.setOutputPath(job,new Path("/home/igor/projetos/pessoal/databases/output/q1/letra_c/"));
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
 }
